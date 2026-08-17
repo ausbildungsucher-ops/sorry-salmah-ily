@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm So Sorry — A Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#ffe3ef;
+    --bg-2:#fff6fa;
+    --paper:#fffdfd;
+    --pink-pale:#ffd6e8;
+    --pink-soft:#ffb8dd;
+    --pink-mid:#ff7cba;
+    --hot-pink:#ff2f92;
+    --rose-deep:#b3175c;
+    --ink:#6b2247;
+    --shadow:rgba(255,45,146,0.22);
+    --font-display:'Great Vibes', cursive;
+    --font-body:'Cormorant Garamond', serif;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    background:
+      radial-gradient(ellipse at 15% 10%, var(--bg-1) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 90%, #ffcfe6 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-2) 0%, #ffffff 60%, var(--bg-2) 100%);
+    font-family: var(--font-body);
+    color: var(--ink);
+    overflow-x:hidden;
+  }
+
+  /* ---------- floating petals ---------- */
+  .floating-petals{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+  }
+  .petal{
+    position:absolute;
+    top:-8vh;
+    width:14px;
+    height:14px;
+    background: linear-gradient(135deg, var(--pink-mid), var(--hot-pink));
+    border-radius: 0 100% 0 100%;
+    opacity:.55;
+    animation: drift linear infinite;
+  }
+  @keyframes drift{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    8%{ opacity:.55; }
+    85%{ opacity:.35; }
+    100%{ transform: translateY(112vh) translateX(var(--drift-x, 40px)) rotate(320deg); opacity:0; }
+  }
+
+  /* ---------- layout ---------- */
+  .stage{
+    position:relative;
+    z-index:1;
+    display:flex;
+    justify-content:center;
+    padding: clamp(2.5rem, 6vw, 6rem) 1.25rem;
+  }
+
+  .letter-frame{
+    position:relative;
+    width:100%;
+    max-width: 700px;
+    padding: 34px;
+  }
+
+  .corner{
+    position:absolute;
+    width: 108px;
+    height: 108px;
+    z-index:2;
+    opacity:.95;
+  }
+  .corner-tl{ top:0; left:0; }
+  .corner-tr{ top:0; right:0; transform: scaleX(-1); }
+  .corner-bl{ bottom:0; left:0; transform: scaleY(-1); }
+  .corner-br{ bottom:0; right:0; transform: scale(-1,-1); }
+
+  .letter-paper{
+    position:relative;
+    background: var(--paper);
+    padding: clamp(2.6rem, 6vw, 4.6rem) clamp(1.8rem, 6vw, 4rem) clamp(2.4rem, 5vw, 3.4rem);
+    border-radius: 6px;
+    box-shadow: 0 30px 80px -20px var(--shadow), 0 2px 0 var(--pink-pale);
+    animation: rise .9s ease-out both;
+  }
+  .letter-paper::before{
+    content:"";
+    position:absolute;
+    inset: 14px;
+    border: 1px solid var(--pink-pale);
+    border-radius: 3px;
+    pointer-events:none;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(18px) scale(.98); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  .eyebrow{
+    margin:0;
+    text-align:center;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight:600;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    font-size: .72rem;
+    color: var(--rose-deep);
+  }
+
+  .divider{
+    display:flex;
+    justify-content:center;
+    margin: .9rem 0 1.8rem;
+  }
+  .divider svg{ width: 200px; height: 22px; }
+
+  .greeting{
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    color: var(--hot-pink);
+    margin: 0 0 1.4rem;
+    text-align:left;
+  }
+
+  .letter-body{
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(1.95em - 1px),
+      var(--pink-pale) calc(1.95em - 1px),
+      var(--pink-pale) 1.95em
+    );
+    background-position: 0 .35em;
+  }
+
+  .letter-body p{
+    margin: 0 0 1.95em;
+    font-size: clamp(1.02rem, .95rem + .35vw, 1.16rem);
+    line-height: 1.95em;
+    font-style: italic;
+    font-weight:400;
+    color: var(--ink);
+    text-align: left;
+  }
+
+  .dropcap{
+    float:left;
+    font-family: var(--font-display);
+    font-style:normal;
+    font-size: 4.4rem;
+    line-height: .78;
+    padding: .06em .09em 0 0;
+    color: var(--hot-pink);
+  }
+
+  .signoff{
+    margin-top: 1rem;
+    text-align:right;
+  }
+  .signoff p{
+    margin:0;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 1.02rem;
+  }
+  .signature{
+    font-family: var(--font-display) !important;
+    font-style: normal !important;
+    font-size: 2.4rem !important;
+    color: var(--rose-deep);
+    margin-top: .15rem !important;
+  }
+
+  .wax-seal{
+    display:flex;
+    justify-content:center;
+    margin-top: 1.6rem;
+  }
+  .wax-seal svg{
+    width: 46px;
+    height: 46px;
+    animation: pulse 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 6px 10px var(--shadow));
+  }
+  @keyframes pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.08); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .petal, .letter-paper, .wax-seal svg{ animation: none !important; }
+  }
+
+  @media (max-width: 480px){
+    .corner{ width: 76px; height: 76px; }
+    .letter-frame{ padding: 18px; }
+    .signoff{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="floating-petals" aria-hidden="true">
+    <span class="petal" style="left:6%;  width:11px; height:11px; --drift-x:30px;  animation-duration:22s; animation-delay:0s;"></span>
+    <span class="petal" style="left:16%; width:16px; height:16px; --drift-x:-40px; animation-duration:28s; animation-delay:3s;"></span>
+    <span class="petal" style="left:27%; width:9px;  height:9px;  --drift-x:20px;  animation-duration:19s; animation-delay:1s;"></span>
+    <span class="petal" style="left:39%; width:13px; height:13px; --drift-x:-25px; animation-duration:25s; animation-delay:6s;"></span>
+    <span class="petal" style="left:52%; width:10px; height:10px; --drift-x:35px;  animation-duration:21s; animation-delay:2s;"></span>
+    <span class="petal" style="left:64%; width:15px; height:15px; --drift-x:-30px; animation-duration:27s; animation-delay:4s;"></span>
+    <span class="petal" style="left:73%; width:9px;  height:9px;  --drift-x:15px;  animation-duration:20s; animation-delay:8s;"></span>
+    <span class="petal" style="left:84%; width:14px; height:14px; --drift-x:-20px; animation-duration:24s; animation-delay:1.5s;"></span>
+    <span class="petal" style="left:93%; width:11px; height:11px; --drift-x:25px;  animation-duration:26s; animation-delay:5s;"></span>
+    <span class="petal" style="left:47%; width:8px;  height:8px;  --drift-x:10px;  animation-duration:18s; animation-delay:9s;"></span>
+  </div>
+
+  <main class="stage">
+    <section class="letter-frame">
+
+      <!-- corner floral ornaments -->
+      <svg class="corner corner-tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6,6 C22,3 12,30 36,33 C58,36 48,58 70,63 C84,66 78,82 92,88" stroke="#ff2f92" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20,16 C27,11 33,16 28,23 C23,28 14,23 20,16 Z" fill="#ffb8dd"/>
+        <path d="M48,42 C56,37 61,44 55,50 C49,55 42,48 48,42 Z" fill="#ffb8dd"/>
+        <path d="M74,68 C82,63 87,70 81,76 C75,80 68,74 74,68 Z" fill="#ffb8dd"/>
+        <g transform="translate(11,11)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff2f92"/>
+        </g>
+        <g transform="translate(62,52) scale(0.82)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff7cba"/>
+        </g>
+        <circle cx="92" cy="88" r="4.5" fill="#ff2f92"/>
+      </svg>
+
+      <svg class="corner corner-tr" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6,6 C22,3 12,30 36,33 C58,36 48,58 70,63 C84,66 78,82 92,88" stroke="#ff2f92" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20,16 C27,11 33,16 28,23 C23,28 14,23 20,16 Z" fill="#ffb8dd"/>
+        <path d="M48,42 C56,37 61,44 55,50 C49,55 42,48 48,42 Z" fill="#ffb8dd"/>
+        <path d="M74,68 C82,63 87,70 81,76 C75,80 68,74 74,68 Z" fill="#ffb8dd"/>
+        <g transform="translate(11,11)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff2f92"/>
+        </g>
+        <g transform="translate(62,52) scale(0.82)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff7cba"/>
+        </g>
+        <circle cx="92" cy="88" r="4.5" fill="#ff2f92"/>
+      </svg>
+
+      <svg class="corner corner-bl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6,6 C22,3 12,30 36,33 C58,36 48,58 70,63 C84,66 78,82 92,88" stroke="#ff2f92" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20,16 C27,11 33,16 28,23 C23,28 14,23 20,16 Z" fill="#ffb8dd"/>
+        <path d="M48,42 C56,37 61,44 55,50 C49,55 42,48 48,42 Z" fill="#ffb8dd"/>
+        <path d="M74,68 C82,63 87,70 81,76 C75,80 68,74 74,68 Z" fill="#ffb8dd"/>
+        <g transform="translate(11,11)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff2f92"/>
+        </g>
+        <g transform="translate(62,52) scale(0.82)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff7cba"/>
+        </g>
+        <circle cx="92" cy="88" r="4.5" fill="#ff2f92"/>
+      </svg>
+
+      <svg class="corner corner-br" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6,6 C22,3 12,30 36,33 C58,36 48,58 70,63 C84,66 78,82 92,88" stroke="#ff2f92" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20,16 C27,11 33,16 28,23 C23,28 14,23 20,16 Z" fill="#ffb8dd"/>
+        <path d="M48,42 C56,37 61,44 55,50 C49,55 42,48 48,42 Z" fill="#ffb8dd"/>
+        <path d="M74,68 C82,63 87,70 81,76 C75,80 68,74 74,68 Z" fill="#ffb8dd"/>
+        <g transform="translate(11,11)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ff7cba"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ff7cba"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff2f92"/>
+        </g>
+        <g transform="translate(62,52) scale(0.82)">
+          <circle cx="0" cy="-6.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="8.4" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="4.8" r="4.6" fill="#ffd6e8"/>
+          <circle cx="-5.9" cy="-2" r="4.6" fill="#ffd6e8"/>
+          <circle cx="0" cy="1" r="3.6" fill="#ff7cba"/>
+        </g>
+        <circle cx="92" cy="88" r="4.5" fill="#ff2f92"/>
+      </svg>
+
+      <article class="letter-paper">
+        <p class="eyebrow">  sorry </p>
+
+        <div class="divider" aria-hidden="true">
+          <svg viewBox="0 0 220 24" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="12" x2="88" y2="12" stroke="#ffb8dd" stroke-width="1.4"/>
+            <path d="M110,6 C114,0 122,0 122,8 C122,14 110,20 110,20 C110,20 98,14 98,8 C98,0 106,0 110,6 Z" fill="#ff2f92"/>
+            <line x1="132" y1="12" x2="220" y2="12" stroke="#ffb8dd" stroke-width="1.4"/>
+          </svg>
+        </div>
+
+        <p class="greeting">My dearest,</p>
+
+        <div class="letter-body">
+          <p><span class="dropcap">I</span>’m so sorry for the way iam. i dont know if i can explain myself, im going to tell u very personal things that u may judge me, may be turned off from me, or may be disgusted of me....</p>
+
+          <p> i generally always over give myself for people i care about, my last time wasnt so good but it was long time ago, i cant control myself i always make this person the center of my univerese giving them all i can , my time my energy all my effort and if i can give my soul i would, its total obsesstion and its unhealthy i dont disagree, i know its not good for me, i know, i have been trying to not be this way, coz its not ideal.</p>
+
+          <p>i have bad  attachments issues and fear from abandoment,,  when somone becomes a part of my daily routine and goes distant, it affects me a lot, i know its not ur fault, i know u need ur space, and i dont want to feel like im forcing u to talk to me or anything, i hate it so much, thinking im making someone uncomfortable, im so fucked up, im so sorry, please forgive me, i know i annoyed u a lot lately bcz of the way iam, im so sorry i couldnt control myself, i have slept less than 6 hours in the last 3 days, im so tired im really sorry for how i make u feel, i wont drag u into this further, i dont want to be affecting u, if u feel like going distant i wont stop u and i cant blame u, after all im just some fucked up person u met online, so im really sorry</p>
+          <p> i overlook all my actions and behavoiur and i recognize my faults and mistakes,im so sorry i couldnt contrl myself and not get so attached and annoyed this much</p>
+          <p> i prefer to be dead than make u feel bad or uncomfortable in anyway</p>
+          <p> thank u so much for all ur support and love and ur presence  </p>
+          <p> i hope i dont make u feel bad again and sorry</p>
+          <p>thank u so much for bearing up me</p>
+        </div>
+
+        <div class="signoff">
+          <p>With love, and deepest regret,</p>
+          <p class="signature">forever sorry</p>
+        </div>
+
+        <div class="wax-seal" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24,42 C24,42 4,29 4,15.5 C4,7 11,2 17,4.5 C21,6 24,10 24,10 C24,10 27,6 31,4.5 C37,2 44,7 44,15.5 C44,29 24,42 24,42 Z" fill="#ff2f92"/>
+          </svg>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+</body>
+</html>
